@@ -1,0 +1,130 @@
+\documentclass{ltjsarticle}
+
+
+% 数式
+\usepackage[]{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{physics}
+\usepackage{enumerate}
+
+% 数式以外
+\usepackage[]{comment}
+\usepackage[longnamesfirst]{natbib}
+\usepackage[]{graphicx}
+\usepackage[]{here}
+
+
+% 定理や定義の書式
+
+% 定義
+\theoremstyle{definition}
+\newtheorem{dfn}{Definition}[subsection]
+% 定理
+\newtheorem{thm}[dfn]{Theorem}
+\newtheorem{thm*}[dfn]{Theorem*}
+% 命題
+\newtheorem{prop}[dfn]{Proposition}
+% 補題
+\newtheorem{lem}[dfn]{Lemma}
+% アルゴリズム
+\newtheorem{algo}[dfn]{Algorithm}
+% 例
+\newtheorem{ex}[dfn]{Example}
+
+
+\begin{document}
+
+\title{確率解析勉強会第１回}
+\author{中津陽}
+\maketitle
+
+\begin{abstract}
+    この資料は、「」著「」を元に、確率解析の学習を行うために作成された。
+\end{abstract}
+
+\section{一般的な確率論}
+\subsection{無限確率空間}
+ なぜ$\sigma$-加法族を考える必要があるか。 
+
+\begin{dfn}[$\sigma$-加法族]
+    \label{dfn:sigma-alg}
+    $\Omega \neq \phi$, $\mathcal{F} \subset 2^{\Omega}$とする。
+    $\mathcal{F}$が$\sigma$加法族であるとは、次を満たすことである。
+    \begin{enumerate}[(i)]
+        \item $\phi \in \mathcal{F}$
+        \item $A \in \mathcal{F} \Rightarrow A^{c} \in \mathcal{F}$ 
+        \item 
+            $
+            \forall n \in \mathbb{N} \qty[ A_n \in \mathcal{F} ] \Rightarrow \bigcup_{n=1}^{\infty} A_n \in \mathcal{F}
+            $
+    \end{enumerate}
+\end{dfn}
+
+Definition\ref{dfn:sigma-alg}(i), (iii)より、$A \in \mathcal{F} \land B \in \mathcal{F} \Rightarrow A \cup B \in \mathcal{F}$が成立する。
+\begin{proof}
+    集合列$A, B, \phi, \phi, \dots$を考える。
+    ただし、$A, B \in \mathcal{F}$である。
+    Definition\ref{dfn:sigma-alg}(i)より、$\phi \in \mathcal{F}$である。
+    したがって、Definition\ref{dfn:sigma-alg}(iii)より、
+    $A \cup B = A \cup B \cup \phi \cup \phi \dots \in \mathcal{F}$
+    が言える。
+\end{proof}
+
+同様にして、ある自然数$N$に対し、$\forall n \in \{1,2,\dots,N \} \qty[A_n \in \mathcal{F}] \Rightarrow \bigcup_{n=1}^{N} A_n \in \mathcal{F}$が成立する。
+\begin{proof}
+    $N=k$において、題意が満たされるものと仮定する。
+    したがって、$\bigcup_{n=1}^{k}A_n \in \mathcal{F}$である。
+    $A_{k+1} \in \mathcal{F}$をとる。
+    % この時、$\forall n \in \{1,2,\dots,k,k+1 \} \qty[A_n \in \mathcal{F}]$は真である。
+    この時、上述の証明より$\bigcup_{n=1}^{k+1}A_n = \bigcup_{n=1}^{k}A_n \cup A_{k+1} \in \mathcal{F}$
+    $N=1$の場合は自明なので、以上から再起的に題意は示された。
+\end{proof}
+
+Definition\ref{dfn:sigma-alg}(ii),(iii)より、
+$\forall n \in \mathbb{N} [A_n \in \mathcal{F}] \Rightarrow \bigcap_{n=1}^{\infty} A_n \in \mathcal{F}$が示される。
+\begin{proof}
+    $\bigcap_{n=1}^{\infty} A_n = \qty( \bigcup_{n=1}^{\infty} A_{n}^{c} )^{c}$より、Definition\ref{dfn:sigma-alg}(ii),(iii)から、$\bigcap_{n=1}^{\infty} A_n = \qty( \bigcup_{n=1}^{\infty} A_{n}^{c} )^{c} \in \mathcal{F}$である。
+\end{proof}
+
+同様にして、ある自然数$N$に対し、$\forall n \in \{1,2,\dots,N \} \qty[A_n \in \mathcal{F}] \Rightarrow \bigcap_{n=1}^{N} A_n \in \mathcal{F}$が成立する。
+\begin{proof}
+    略
+\end{proof}
+
+$\Omega = \phi^{c}$なので、$\Omega \in \mathcal{F}$が言える。
+
+\begin{dfn}[確率測度]\mbox{}
+    \label{dfn:measure}
+    $\Omega \neq \phi$を集合、 $\mathcal{F} \subset 2^{\Omega}$を$\sigma$-加法族とする。以下を満たすとき、関数$\mathbb{P}:\mathcal{F} \in A \to x \in [0,1]$を確率測度という。
+    \begin{enumerate}[(i)]
+        \item $\mathbb{P}(\Omega)=1$
+        \item $\qty{A_n}$が$\mathcal{F}$に属する互いに素な集合列ならば、（$i.e. \: \forall n,m \in \mathrm{N}(n \neq m), A_n \cap A_m = \phi$）
+        次が成立する。
+        \begin{equation}
+            \mathrm{P} \qty(\bigcap_{n=1}^{\infty} A_n) = \sum_{n=1}^{\infty} \mathrm{P} \qty(A_n)
+        \end{equation}
+    \end{enumerate}
+    この時、$\mathrm{P}(A) \in [0,1]$の値を$A$の確率と呼ぶ。また、(ii)の性質のことを可算加法性という。
+\end{dfn}
+
+\begin{ex}[]
+    $\qty[0,1]$から、無作為に実数を選ぶことに対する数学モデルを、その確率が区間上に一様に分布するよう考える。
+    開区間$\qty[a,b]$の確率は以下のように定義される。
+    \begin{equation}
+        \label{ex:01lebesgue}
+        \mathrm{P} \qty[a,b] = b-a , \: 0 \leq a \leq b \leq 1
+    \end{equation}
+    $\qty[0,1]$上のこの確率測度はLebesgue測度と呼ばれ、$\mathcal{L}$とも記される。
+    $\mathcal{P}[a,a]=0$より、区間上の1点に対する確率は0であるとわかる。
+    従って、$\mathcal{P}(a,b)=\mathcal{P}[a,b]$であると言える。
+
+    \ref{ex:01lebesgue}と確率測度の性質より、確率が決まる集合の全体を考えると、
+    それは開区間の全体を含む最小の$\sigma$-加法族であるとわかる。
+\end{ex}
+
+
+
+
+% \bibliography{Hitotsubashi2023.bib}
+% \bibliographystyle{econ-aea.bst}
+
+\end{document}
