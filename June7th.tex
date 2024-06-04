@@ -94,10 +94,10 @@ $\Omega = \phi^{c}$なので、$\Omega \in \mathcal{F}$が言える。
 
 \begin{dfn}[確率測度]\mbox{}
     \label{dfn:measure}
-    $\Omega \neq \phi$を集合、 $\mathcal{F} \subset 2^{\Omega}$を$\sigma$-加法族とする。以下を満たすとき、関数$\mathbb{P}:\mathcal{F} \in A \to x \in [0,1]$を確率測度という。
+    $\Omega \neq \phi$を集合、 $\mathcal{F} \subset 2^{\Omega}$を$\sigma$-加法族とする。以下を満たすとき、関数$\mathrm{P}:\mathcal{F} \in A \to x \in [0,1]$を確率測度という。
     \begin{enumerate}[(i)]
-        \item $\mathbb{P}(\Omega)=1$
-        \item $\qty{A_n}$が$\mathcal{F}$に属する互いに素な集合列ならば、（$i.e. \: \forall n,m \in \mathrm{N}(n \neq m), A_n \cap A_m = \phi$）
+        \item $\mathrm{P}(\Omega)=1$
+        \item $\qty{A_n}$が$\mathcal{F}$に属する互いに素な集合列ならば、（$i.e. \: \forall n,m \in \mathbb{N}(n \neq m), A_n \cap A_m = \phi$）
         次が成立する。
         \begin{equation}
             \mathrm{P} \qty(\bigcap_{n=1}^{\infty} A_n) = \sum_{n=1}^{\infty} \mathrm{P} \qty(A_n)
@@ -114,12 +114,58 @@ $\Omega = \phi^{c}$なので、$\Omega \in \mathcal{F}$が言える。
         \mathrm{P} \qty[a,b] = b-a , \: 0 \leq a \leq b \leq 1
     \end{equation}
     $\qty[0,1]$上のこの確率測度はLebesgue測度と呼ばれ、$\mathcal{L}$とも記される。
-    $\mathcal{P}[a,a]=0$より、区間上の1点に対する確率は0であるとわかる。
-    従って、$\mathcal{P}(a,b)=\mathcal{P}[a,b]$であると言える。
+    $\mathrm{P}[a,a]=0$より、区間上の1点に対する確率は0であるとわかる。
+    従って、$\mathrm{P}(a,b)=\mathrm{P}[a,b]$であると言える。
 
     \ref{ex:01lebesgue}と確率測度の性質より、確率が決まる集合の全体を考えると、
-    それは開区間の全体を含む最小の$\sigma$-加法族であるとわかる。
+    それは閉区間の全体を含む最小の$\sigma$-加法族であるとわかる。
+    開区間は閉区間列の和集合として表されるため、この$\sigma$-加法族は全ての開区間を含む。
+
+    このような$\sigma$-加法族を$\qty[0,1]$の部分集合のBorel$\sigma$-加法族といい、$\mathcal{B}\qty[0,1]$
+    と表す。このBorel$\sigma$-加法族に属する集合は、Borel集合と呼ばれる。
+    これらの事象の確率は、閉区間の確率を決めると自動的に定まることが言える。
 \end{ex}
+
+\begin{ex}[]
+    コインを無限回投げるとし、$\Omega_{\infty}$を起こり得る全ての結果の集合とする。
+    各コイン投げでの表の確率は$p > 0$、裏の確率は$q = 1-p > 0$であるものとし、
+    各回のコイン投げは全て独立であるものとする。
+    この確率的試行に対応する確率測度を構成する。
+    そのためには、先ほどの例題から類推して、有限回のコイン投げで表すことのできる全ての集合を集めた集合族を含む最小の
+    $\sigma$-加法族を構成し、有限回のコイン投げにより表される集合の確率から、その$\sigma$-加法族に属する
+    全ての集合の確率が定まることを言えば良い。
+
+    そのようにして構成した$\sigma$-加法族の要素の中には、確率の値の計算が困難なものもある。
+    この集合族を$\mathcal{F}_{\infty}$と定義した上で、次のような集合$A$を考える。
+    \begin{equation}
+        \label{ex:114-A}
+        A = \qty{ \omega \in \Omega | \lim_{n \to \infty} \frac{H_n(\omega_1 \dots \omega_n)}{n} = \frac{1}{2} }
+    \end{equation}
+    ただし、$H_n(\omega_1 \dots \omega_n)$は最初の$n$回のコイン投げの$H$の回数である。
+    つまり、$A$は表が出る比率の長期的平均が$\frac{1}{2}$であるような、表・裏の列全体からなる集合であると言える。
+    $A \in \mathcal{F}_{\infty}$を示す。そのために、$m,n \in \mathbb{N}_{>0}$に対し、次の集合を定義する。
+    \begin{equation}
+        \label{ex:114-S}
+        S_{n,m} = \qty{ \omega \in \Omega ; \abs{\frac{H_n(\omega_1 \dots \omega_n)}{n} - \frac{1}{2}} \leq \frac{1}{m} }
+    \end{equation}
+    $S_{n,m}$は、最初の$n$回のコイン投げ結果を用いて表される全ての事象からなる$\sigma$-加法族$\mathcal{F}_n$に
+    属しており、その確率は$n,m$が判明次第、定義できる。
+
+    コイン投げの列$\omega=\omega_1 \omega_2 \cdots$が$\omega \in A$を満たす必要十分条件は、
+    $\forall m \in \mathbb{N} \qty[ \exists N \in \mathbb{N} \qty[ \forall n \geq N \qty[\omega \in S_{n,m}] ] ]$
+    が成立することであり、この命題は次のように言い換えられる。
+    \begin{eqnarray*}
+        && \forall m \in \mathbb{N} \qty[ \exists N \in \mathbb{N} \qty[ \forall n \geq N \qty[\omega \in S_{n,m}] ] ] \\ 
+        &=& \forall m \in \mathbb{N} \qty[ \exists N \in \mathbb{N} \qty[ \omega \in \bigcap_{n=N}^{\infty} S_{n,m} ] ] \\ 
+        &=& \forall m \in \mathbb{N} \qty[ \omega \in \bigcup_{N=1}^{\infty} \bigcap_{n=N}^{\infty} S_{n,m} ] \\ 
+        &=& \omega \in \bigcap_{m=1}^{\infty} \bigcup_{N=1}^{\infty} \bigcap_{n=N}^{\infty} S_{n,m} 
+    \end{eqnarray*}
+    従って、$A = \bigcap_{m=1}^{\infty} \bigcup_{N=1}^{\infty} \bigcap_{n=N}^{\infty} S_{n,m}$である。
+    従って、$A \in \mathcal{F}_{\infty}$が言える。
+    測度が$\mathcal{F}_{\infty}$上で定義されているので、確率$\mathrm{P}(A)$の値は定まると言える。
+    結論的には、大数の強法則より、$p=\frac{1}{2}$ならば$\mathrm{P}(A)=1$、$p \neq \frac{1}{2}$ならば$\mathrm{P}(A)=0$であると言える。
+\end{ex}
+
 
 
 
