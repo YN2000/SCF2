@@ -11,13 +11,14 @@
 \usepackage[longnamesfirst]{natbib}
 \usepackage[]{graphicx}
 \usepackage[]{here}
+\numberwithin{equation}{subsection}
 
 
 % 定理や定義の書式
 
 % 定義
 \theoremstyle{definition}
-\newtheorem{dfn}{Definition}[subsubsection]
+\newtheorem{dfn}{Definition}[subsection]
 % 定理
 \newtheorem{thm}[dfn]{Theorem}
 \newtheorem{thm*}[dfn]{Theorem*}
@@ -25,6 +26,8 @@
 \newtheorem{prop}[dfn]{Proposition}
 % 補題
 \newtheorem{lem}[dfn]{Lemma}
+% 注意
+\newtheorem{rem}[dfn]{Rem}
 % アルゴリズム
 \newtheorem{algo}[dfn]{Algorithm}
 % 例
@@ -171,6 +174,170 @@ $\Omega = \phi^{c}$なので、$\Omega \in \mathcal{F}$が言える。
     $A \in \mathcal{F}$が$\mathrm{P}(A)=1$の時、ほとんど確実(almost surely)に事象$A$が起こるという。
 \end{dfn}
 
+
+ルベーグ下積和を次で定義する。
+\begin{equation}
+    LS_{\Pi}^{-}(X) = \sum_{k=1}^{\infty} y_k \mathrm{P} (A_k)
+\end{equation}
+分割点間の距離の最大値$||\Pi||$が0に近づくにつれて、$\qty[-\infty , \infty]$の範囲でこの下積和は収束し、
+この極限値をルベーグ積分$\int_{\Omega} X(\omega) d \mathrm{P}(\omega)$として定義する。
+
+
+$\forall \omega \in \Omega \qty[0 \leq X(\omega) < \infty]$を仮定していた。
+この条件に反する$\omega$の集合が測度0ならば、$\infty * 0 = 0 * \infty = 0$なので、
+この積分には影響を及ぼさない。
+一方、$\mathrm{P} \qty{\omega ; X(\omega) \geq 0} = 1$かつ$\mathrm{P} \qty{\omega ; X(\omega) = \infty} >0$
+ならば、$\int_{\Omega} X(\omega) d \mathrm{P}(\omega)= \infty$と定義する。
+
+
+確率変数$X$が、正負両方の値を取りうる場合を考える。
+確率変数$X$の正の部と負の部を次で定義する。
+\begin{equation}
+    X^+ \qty(\omega) = max \qty{X(\omega), 0}, \; X^- (\omega) = max \qty{ -X(\omega), 0}
+\end{equation}
+これらはともに非負の確率変数であり、$X=X^+ - X^-, \; |X| = X^+ + X^-$が成立する。
+$\int_{\Omega} X^+(\omega) d \mathrm{P}(\omega)$, $\int_{\Omega} X^-(\omega) d \mathrm{P}(\omega)$
+はどちらも上記の手法により定義できる。
+また、少なくとも一方が$\infty$でない場合、$\qty[-\infty , \infty]$の範囲で、次を定義できる。
+まだ、積分の線形性は示されていないので、これが定義である。
+\begin{equation}
+    \label{dfn:L-integral}
+    \int_{\Omega} X(\omega) d \mathrm{P}(\omega) = \int_{\Omega} X^+ (\omega) d \mathrm{P}(\omega) - \int_{\Omega} X^-(\omega) d \mathrm{P} (\omega)
+\end{equation}
+次が満たされる時、$X$は可積分であるという。
+\begin{equation}
+    \int_{\Omega} X^+ (\omega) d \mathrm{P}(\omega) < \infty, \int_{\Omega} X^-(\omega) d \mathrm{P} (\omega) < \infty
+\end{equation}
+また、$\int_{\Omega} X^+(\omega) d \mathrm{P}(\omega) = \infty$かつ$\int_{\Omega} X^-(\omega) d \mathrm{P}(\omega) = \infty$の場合は、$\infty - \infty$となり、$\int_{\Omega} X(\omega) d \mathrm{P}(\omega)$は不定である（定義されない）。
+
+
+ルベーグ積分の基本性質は次の通りである。
+\begin{thm}[]
+    Xを確率空間$\qty(\Omega , \mathcal{F}, \mathrm{P})$上の確率変数とする。
+    \begin{enumerate}[(i)]
+        \item Xがa.s.に取りうるのは、有限個の値$y_1, y_2, y_3, \dots , y_n$だけならば、次が成立する。
+        \begin{equation}
+            \int_{\Omega} X(\omega) dP(\omega) = \sum_{k=0}^{n} y_k \mathrm{P} \qty{X=y_k}
+        \end{equation}
+        \item 確率変数$X$が可積分であるための必要十分条件は、以下である。
+        \begin{equation}
+            \int_{\Omega} |X(\omega)| d \mathrm{P}(\omega) < \infty
+        \end{equation}
+        ただし、$Y$は$(\Omega , \mathcal{F} , \mathrm{P})$上の別の確率変数とする。
+        この性質を可積分性という。
+        \item $X \leq Y a.s.$かつ、$\int_{\Omega} X(\omega ) d \mathrm{P} (\omega )$と
+        $\int_{\Omega} Y(\omega ) d \mathrm{P} (\omega )$が定義されているならば、
+        次が成立する。
+        \begin{equation}
+            \int_{\Omega} X(\omega ) d \mathrm{P} (\omega ) \leq \int_{\Omega} Y(\omega ) d \mathrm{P} (\omega )
+        \end{equation}
+        この性質のことを大小関係の保存という。
+        特に、$X=Y a.s.$で、どちらかの積分が定義されているならば、両方が定義され次が成立する。
+        \begin{equation}
+            \int_{\Omega} X(\omega ) d \mathrm{P} (\omega ) = \int_{\Omega} Y(\omega ) d \mathrm{P} (\omega )
+        \end{equation}
+        \item $\alpha ,\beta \in \mathbb{R}$かつ$X,Y$が可積分、または$\alpha ,\beta \in \mathbb{R}_{>0}$かつ$X , Y$が非負ならば、次が成立する。
+        \begin{equation}
+            \int_{\Omega} (\alpha X(\omega) + \beta Y(\omega)) d \mathrm{P} (\omega ) = \alpha \int_{\Omega} X(\omega) d \mathrm{P} (\omega) + \beta \int_{\Omega} (\omega) d\mathrm{P} (\omega)
+        \end{equation}
+        この性質を線型性という。
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    (i) $X \geq 0 a.s$の場合を考える。
+        $\qty{y_k}$の中に$0$が含まれていないなら、$y_0=0$を加える。
+        これは、$X$が一般の確率変数である場合に、$X^+ - X^-$を考える必要があるからだと思われる。
+
+        必要ならば、添え字を振り直して$0=y_0 < y_1 < y_2 < \cdots < y_n$と仮定する。
+        これらを分割点として用いて、$A_k = \qty{y_k \leq X < y_{k+1}} = \qty{X=y_k}$となり、
+        ルベーグ下積和は以下のように書ける。
+        \begin{equation}
+            LS_{\Pi}^{-}(X) = \sum_{k=1}^{n} y_k \mathrm{P} (A_k)
+        \end{equation}
+        分割点を増やしてもルベーグ下積和は変化しないので、これはルベーグ積分の説明に整合的である。
+
+
+    (ii)後ほど、(iii),(iv)を用いて示す。
+
+
+    (iii)$X \leq Y a.s.$ならば、$X^+ \leq Y^+$かつ$X^- \geq Y^-$a.s.である。
+    $X^+ \leq Y^+ a.s.$なので、任意の分割$\Pi$に対し、ルベーグ下積和は$LS_{\Pi}^{-}(X^+) \leq LS_{\Pi}^{-}(Y^+)$を満たす。従って、次が成立する。
+    \begin{equation}
+        \label{eq:Li1}
+        \int_{\Omega} X^+(\omega) d\mathrm{P} (\omega) \leq \int_{\Omega} Y^+(\omega) d\mathrm{P} (\omega)
+    \end{equation}
+    ほとんど確実に$X^- \geq Y^-$なので、次も成立する。
+    \begin{equation}
+        \label{eq:Li2}
+        \int_{\Omega} X^-(\omega) d\mathrm{P} (\omega) \geq \int_{\Omega} Y^-(\omega) d\mathrm{P} (\omega)
+    \end{equation}
+    (\ref{dfn:L-integral}),(\ref{eq:Li1}),(\ref{eq:Li2})より、示される。
+
+
+    (iv) の証明は、ルベーグ積分の正確な分析が必要となるので、今回はパスする。
+
+
+    (ii) (iii)と(iv)を用いて示す。必要性は(iv)より自明なので、十分性を示す。$\forall \omega \in \Omega$に対し、$|X|=X^+ + X^-$かつ$X^+, X^- \geq 0$なので、$\forall \omega \in \Omega$に対し、$X^+ \leq |X|$かつ$X^- \leq |X|$である。もし$\int_{\Omega} |X(\omega)| d\mathrm{P} (\omega) < \infty$ならば、(iii)より$\int_{\Omega} X^+(\omega) d\mathrm{P} (\omega) < \infty$かつ$\int_{\Omega} X^-(\omega) d\mathrm{P} (\omega) < \infty$が真であると言え、$X$は定義より可積分であると言える。
+\end{proof}
+
+\begin{rem}[]
+    確率変数を$A \in \mathcal{F}$で積分する。$A \in \mathcal{F}$に対し、次を定義する。
+    \begin{equation}
+        \int_{A} X(\omega) d\mathrm{P} (\omega) = \int_{\Omega} \mathbb{I}_A(\omega) d\mathrm{P} (\omega)
+    \end{equation}
+    ただし$\mathbb{I}_A(\omega)$は次式の定義函数（確率変数）である。
+    \begin{equation}
+        \mathbb{I}_A(\omega) =
+        \begin{cases}
+            1 & \omega \in A \\
+            0 & \omega \notin A 
+        \end{cases}
+    \end{equation}
+    $A \cap B = \phi$ならば、$\mathbb{I}_A + \mathbb{I}_B = \mathbb{I}_{A\cup B}$であり、
+    線形性より次が得られる。
+    \begin{equation}
+        \int_{A\cup B} X(\omega) d\mathrm{P}(\omega) = \int_{A} X(\omega) d\mathrm{P} (\omega) + \int_{B} X(\omega) d\mathrm{P} (\omega)
+    \end{equation}
+\end{rem}
+
+
+\begin{dfn}[期待値]
+    $X$を確率空間$(\Omega , \mathcal{F} , \mathrm{P})$上の確率変数とする。
+    $X$の期待値(expectation, or expected value)は次で定義される。
+    \begin{equation}
+        \mathbb{E}X = \int_{\Omega} X(\omega) d\mathbb{P} (\omega)
+    \end{equation}
+\end{dfn}
+この定義が意味を持つのは、右辺の積分が定義できる場合である。
+$\mathbb{E}X^+$, $\mathbb{E}X^-$の両方が有限であるとき、$\mathbb{E}X < \infty$であり、$X$は可積分であるという。
+
+
+ルベーグ積分の基本的性質を、期待値の言葉に置き換えて述べ直す。
+\begin{thm}[]
+    $X,Y$を確率空間$(\Omega , \mathcal{F} , \mathrm{P})$上の異なる確率変数とする。
+
+
+    (i) $X$の取り得る値が可算個（$x_0, x_1, \dots, x_n, \dots$）ならば、次が成立する。
+    \begin{equation}
+        \mathbb{E}X = \sum_{\omega \in \Omega} X(\omega) \mathrm{P} \qty{\omega}
+    \end{equation}
+    ただし、$\Omega = \qty{x_0, x_1, \dots, x_n, \dots}$とする。
+
+
+    (ii) 確率変数$X$が可積分であるための必要十分条件は、
+    \begin{equation}
+        \mathbb{E} |X| < \infty
+    \end{equation}
+    である。
+
+
+    (iii) $X \leq Y a.s.$であるとする。$X, Y$がそれぞれ可積分、または$X, Y \geq 0 a.s.$ならば、
+    次が成立する。
+    \begin{equation}
+        \mathbb{E} X = \mathbb{E} Y
+    \end{equation}
+\end{thm}
 
 
 % \bibliography{Hitotsubashi2023.bib}
