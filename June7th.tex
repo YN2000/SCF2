@@ -332,12 +332,70 @@ $\mathbb{E}X^+$, $\mathbb{E}X^-$の両方が有限であるとき、$\mathbb{E}X
     である。
 
 
-    (iii) $X \leq Y a.s.$であるとする。$X, Y$がそれぞれ可積分、または$X, Y \geq 0 a.s.$ならば、
+    (iii) $X \leq Y a.s.$であるとする。$X, Y$が可積分、または$X, Y \geq 0 a.s.$ならば、
     次が成立する。
     \begin{equation}
         \mathbb{E} X = \mathbb{E} Y
     \end{equation}
+    特に、$X=Y a.s.$で、どちらか一方の確率変数が可積分ならば、両方の確率変数が可積分であり、$\mathbb{E} X = \mathbb{E} Y$が成立する。
+    また、$X=Y a.s.$で、どちらか一方の確率変数がa.s.に非負であるならば、両方の確率変数がa.s.に非負であり、$\mathbb{E} X = \mathbb{E} Y$が成立する。
+
+
+    (iv) $\alpha, \beta \in \mathbb{R}$かつ$X,Y$が可積分である、または$\alpha, \beta \in \mathbb{R}_{>0}$かつ$X,Y$が非負ならば、次が成立する。
+    \begin{equation}
+        \mathbb{E}(\alpha X + \beta Y) = \alpha \mathbb{E}X + \beta \mathbb{E}Y
+    \end{equation}
+
+
+    (v) $\phi: \mathbb{R} \to \mathbb{R}$を凸関数とする。$\mathbb{E}|X| < \infty$ならば、次が成立する。
+    \begin{equation}
+        \phi(\mathbb{E}X) \leq \mathbb{E}\phi(X)
+    \end{equation}
+    この不等式をJensenの不等式という。
 \end{thm}
+
+\begin{proof}
+    (v)のみ、時間があれば示す。
+\end{proof}
+
+\begin{ex}[]
+    この例題では、標本空間$\Omega$が非可算集合であっても、その確率空間上で定義された確率変数が可算個の値しか取らないような場合を考えることができると述べられている。
+\end{ex}
+
+\begin{ex}[]
+    $\Omega=[0,1]$とする。$\mathrm{P}$を$[0,1]$上のルベーグ測度とする。
+    次の確率変数を考える。
+    \begin{equation}
+        X(\omega) = 
+        \begin{cases}
+            1 & \omega \in \mathbb{R} \backslash \mathbb{Q} \\
+            0 & \omega \in \mathbb{Q}
+        \end{cases}
+    \end{equation}
+    定理に従い計算すると、$\mathbb{E}X=1$である。
+    これは、$\mathbb{Q}\cap \qty[0,1]$が可算集合であるため、可算加法性と1点上のルベーグ測度が0であることから、$\mathrm{P} (\mathbb{Q} \cap \qty[0,1])=0$であることと、$\mathrm{P}[0,1]=1$より、$\mathrm{P}([0,1] \backslash \mathbb{Q})=1$が言えるからである。
+    この時、$X=1 a.s.$であり、従って$\mathbb{E}X=1$である。
+
+
+    実際には、$[0,1]$に属する乱数を生成するために考案されているアルゴリズムのほとんどは、有理数を生成する。$[0,1]$に属する乱数を生成するアルゴリズムからのアウトプットを、適度に理想化したものが一様分布である（w.p. 1で無理数を生成する？）。しかし、この点を追求し過ぎることは非現実的であると述べられている。
+
+
+    リーマン積分を用いてこの問題を考える。
+    次のような関数$f: \mathbb{R} \to \qty{0,1}$を定義する。
+    \begin{equation}
+        f(x) = 
+        \begin{cases}
+            1 & x \in \mathbb{R} \backslash \mathbb{Q} \\
+            0 & x \in \mathbb{Q}
+        \end{cases}
+    \end{equation}
+    この関数の$[0,1]$上ルベーグ積分の値は1である。
+    分割点$0=x_0 < x_1 < x_2 < \cdots < x_n = 1$を選び、次を定義する。
+    \begin{equation}
+        M_k = \underset{x_{k-1} \leq x \leq x_{k}}{max} f(x), \; m_k=\underset{x_{k-1} \leq x \leq x_{k}}{min} f(x)
+    \end{equation}
+    各小区間は有理数も無理数も含んでいるので、$\forall k \in \qty{1,2,\dots,n}[M_k=1 land m_k=0]$
+\end{ex}
 
 
 % \bibliography{Hitotsubashi2023.bib}
