@@ -32,6 +32,10 @@
 % 例
 \newtheorem{ex}[dfn]{Example}
 
+% Declear new operator
+\DeclareMathOperator*{\plim}{plim}
+
+
 
 \begin{document}
 
@@ -39,8 +43,27 @@
 \author{中津陽}
 \maketitle
 
+$I(\Delta)^2$は条件付き期待値のJensenの不等式により、非負のsubmartingaleである。
+したがって、Karatzas, and Shreveより、$I(\Delta)$は一意なDoob-Meyer decompositionを持つ。
+\begin{equation}
+    I_t(\Delta) = M_t + A_t, \, 0 \leq t < \infty
+\end{equation}
+ただし、$M$は右連続なmartingaleで、$A$は連続な増加過程である。
 
+この時、$I(\Delta)$の２次変分$\langle I(\Delta)\rangle_t$を以下の様に定める。
+\begin{equation}
+    \langle I(\Delta) \rangle_t := A_t
+\end{equation}
+このことより、$I(\Delta)$の2次変分が、a.s.に同一なパスを持つという意味において、一意に存在するということが言える。
 
+この2次変分が教科書の定義と合致することは、Karatzas, and Shreveの以下の定理より分かる。
+\begin{thm}[]
+    Let $X \in \mathcal{M}_{2}^c$.
+    For partitions $\Pi$ of $[0, t]$, we have
+    \begin{equation}
+        \plim_{||\Pi|| \to 0} V_{t}^{2} (\Pi) = \langle X \rangle_t
+    \end{equation}
+\end{thm}
 
 
 \bibliography{Hitotsubashi2023.bib}
