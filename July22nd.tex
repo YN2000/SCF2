@@ -1,0 +1,49 @@
+\documentclass{ltjsarticle}
+
+
+% 数式
+\usepackage[]{amsmath, amssymb, amsfonts, amsthm}
+\usepackage{physics}
+\usepackage{enumerate}
+
+% 数式以外
+% \usepackage[]{comment}
+\usepackage[longnamesfirst]{natbib}
+\usepackage[]{graphicx}
+% \usepackage[]{here}
+
+
+% 定理や定義の書式
+
+% 定義
+\theoremstyle{definition}
+\newtheorem{dfn}{Definition}[subsubsection]
+% 定理
+\newtheorem{thm}[dfn]{Theorem}
+\newtheorem{thm*}[dfn]{Theorem*}
+% 命題
+\newtheorem{prop}[dfn]{Proposition}
+% 補題
+\newtheorem{lem}[dfn]{Lemma}
+% 注意
+\newtheorem{rem}[dfn]{Rem}
+% アルゴリズム
+\newtheorem{algo}[dfn]{Algorithm}
+% 例
+\newtheorem{ex}[dfn]{Example}
+
+
+\begin{document}
+
+\title{確率解析勉強会発表資料}
+\author{中津陽}
+\maketitle
+
+
+
+
+
+\bibliography{Hitotsubashi2023.bib}
+\bibliographystyle{econ-aea.bst}
+
+\end{document}
